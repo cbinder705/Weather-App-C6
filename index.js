@@ -41,7 +41,13 @@ function weatherSearch(city) {
         .then((response) => {
           return response.json();
         })
-        .then();
+        .then((wData) => {
+          const description = wData.list[0].weather[0].description;
+          const day = formatDate(wData.list[0].dt_txt);
+          const city = wData.city.name;
+          const temperature = wData.list[0].main.temp;
+          const windSpeed = wData.list[0].wind.speed;
+        });
     });
 }
 // date to be formatted using formatDate()
