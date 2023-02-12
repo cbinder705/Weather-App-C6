@@ -1,12 +1,20 @@
 const theCity = document.querySelector("#current-city");
 const theDate = document.querySelector("#current-date");
+const apiKey = "106f2f72e03bbf98c782d152c4ecb390";
 const theTemperature = document.querySelector("#temp");
 const theHumidity = document.querySelector("#humidity");
 const theWindSpeed = document.querySelector("#wind-speed");
 const currentSearch = document.getElementById("search-input");
-const searchButton = document.getElementById("search-button");
 const searchHistory = localStorage.getItem("#search-history");
-const apiKey = "106f2f72e03bbf98c782d152c4ecb390";
+const searchButton = document.getElementById("search-button");
+searchButton.addEventListener("click", function () {
+  if (document.getElementById("search-input").value != "") {
+    weatherSearch(currentSearch.value);
+  } else {
+    alert("Search criteria not met.");
+  }
+});
+
 // query selectors to pass data from api to html
 // fetch call to api
 
@@ -21,6 +29,7 @@ function weatherSearch(city) {
     .then(function (locationData) {
       const lat = locationData[0].lat;
       const lon = locationData[0].lon;
+
       function geoCord(array, len) {
         let cord = [],
           i = 0,
@@ -32,7 +41,8 @@ function weatherSearch(city) {
       }
 
       function formatDate(d8) {
-        dateString = d8.slice(5, 7) + "/" + d8.slice(8, 10) + d8.slice(0, 4);
+        dateString =
+          d8.slice(5, 7) + "/" + d8.slice(8, 10) + "/" + d8.slice(0, 4);
         return dateString;
       }
       fetch(
@@ -54,9 +64,6 @@ function weatherSearch(city) {
           theHumidity.textContent = humidity + "%";
           theWindSpeed.textContent = windSpeed + "mph";
           const date = wData.list[0].dt_txt;
-          const followingDates = returnData.list.filter(
-            (item) => item.dt_txt !== date
-          );
         });
     });
 }
