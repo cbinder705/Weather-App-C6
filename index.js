@@ -46,7 +46,17 @@ function weatherSearch(city) {
           const day = formatDate(wData.list[0].dt_txt);
           const city = wData.city.name;
           const temperature = wData.list[0].main.temp;
+          const humidity = wData.list[0].main.humidity;
           const windSpeed = wData.list[0].wind.speed;
+          theDate.innerHTML = `&nbsp;(` + day + `)`;
+          theCity.textContent = city;
+          theTemperature.textContent = temperature + " °F";
+          theHumidity.textContent = humidity + "%";
+          theWindSpeed.textContent = windSpeed + "mph";
+          const date = wData.list[0].dt_txt;
+          const followingDates = returnData.list.filter(
+            (item) => item.dt_txt !== date
+          );
         });
     });
 }
