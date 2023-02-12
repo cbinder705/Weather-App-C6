@@ -35,7 +35,7 @@ function weatherSearch(city) {
           i = 0,
           n = array.length;
         while (i < n) {
-          geoCord.push(array.slice(i, (i += len)));
+          cord.push(array.slice(i, (i += len)));
         }
         return geoCord;
       }
@@ -64,6 +64,20 @@ function weatherSearch(city) {
           theHumidity.textContent = humidity + "%";
           theWindSpeed.textContent = windSpeed + "mph";
           const date = wData.list[0].dt_txt;
+          const followingDates = wData.list.filter((d8) => d8.dt_txt !== date);
+          const ArrayOfDates = geoCord(followingDates, 8);
+          ArrayOfDates.forEach((date, id) => {
+            const today = date[2];
+            document.querySelector(`#future-date${id}`).innerHTML = formatDate(
+              today.dt_txt
+            );
+            document.querySelector(`#temp${id}`).innerHTML =
+              today.main.temp + " °F";
+            document.querySelector(`#wind-speed${id}`).innerHTML =
+              today.wind.speed + " MPH";
+            document.querySelector(`#humidity${id}`).innerHTML =
+              today.main.humidity + " %";
+          });
         });
     });
 }
